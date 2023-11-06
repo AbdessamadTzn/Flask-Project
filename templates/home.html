@@ -24,7 +24,8 @@
     </p>
     <p style="text-align: center; color: red">
       <b>Note: Project Under Development</b><br />
-      <b>This web application is a work in progress.</b>
+      <b>This web application is a work in progress.</b><br />
+      <b>You can just sign UP..Login Under Development</b>
     </p>
     <form class="mx-auto" style="margin-top: 20px; max-width: 300px">
       <div class="mb-3">
@@ -57,7 +58,18 @@
           >Remember me</label
         >
       </div>
+
       <button type="submit" class="btn btn-primary">LogIn</button>
+      <span style="color: black">or</span>
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="redirectToSignUp()"
+      >
+        Sign Up
+      </button>
+      <br />
+      <br />
       <button
         type="button"
         class="btn btn-primary"
@@ -65,9 +77,90 @@
       >
         I'm a student
       </button>
+      <div
+        class="modal"
+        tabindex="-1"
+        role="dialog"
+        id="lastModificationsModal"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" style="color: black">
+                Last Modifications
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                onclick="closeLastModifications()"
+              >
+                <span aria-hidden="true" style="color: black">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- Add your content for last modifications here -->
+              <p style="text-align: center">
+                <b style="color: red"
+                  >&#x21bb; Last Modifications: 6/11/2023
+                </b>
+              </p>
+              <p style="color: black">
+                <b>&#9745;Sign Up for teachers</b><br />
+                <b>&#9744;Log in...in progress...</b><br />
+                <b>&#9744;Documentation...soon</b>
+              <hr style="color: black" />
+              <b style="color: black">&#9745;Inscription pour les enseignants</b><br />
+              <b style="color: black">&#9744;"Se connecter"..en cours d’implémentation...</b><br />
+              <b style="color: black">&#9744;Documentation... à venir bientôt</b>
+            </p>
+            </div>
+
+            <div class="modal-footer">
+              <p style="color: blueviolet">
+                See documentation for more | Voir la documentation pour plus de
+                detail
+              </p>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="redirectToDocumentationEnglish()"
+              >
+                Englsih Version
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="redirectToDocumentationFrench()"
+              >
+                Version Français
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <script>
+        $(document).ready(function () {
+          $("#lastModificationsModal").modal("show");
+        });
         function redirectToStudentList() {
           window.location.href = "{{url_for('student')}}";
+        }
+        function redirectToSignUp() {
+          window.location.href = "{{url_for('teacher')}}";
+        }
+
+        function closeLastModifications() {
+          $("#lastModificationsModal").modal("hide");
+        }
+        function redirectToDocumentationEnglish() {
+          // Replace 'your-documentation-link' with the actual link
+          window.location.href = "your-documentation-link";
+        }
+        function redirectToDocumentationFrench() {
+          // Replace 'your-documentation-link' with the actual link
+          window.location.href = "your-documentation-link";
         }
       </script>
     </form>
