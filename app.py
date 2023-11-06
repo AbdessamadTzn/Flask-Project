@@ -16,6 +16,4 @@ def student():
     return render_template('studentlist.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-    ##window.localstorage //for logins 
+    app.run()
