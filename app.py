@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import re
 
 
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'teacherssecretkey'
@@ -17,6 +18,7 @@ class Teacher(teacher_db.Model):
     name = teacher_db.Column(teacher_db.String(20), nullable=False)
     email = teacher_db.Column(teacher_db.String(100), unique=True)
     password = teacher_db.Column(teacher_db.String(100))
+
     def __repr__(self):
         return '<Teacher %r>' % self.name
 
@@ -32,7 +34,11 @@ def index():
 def student():
     return render_template('studentlist.html')
 
-@app.route("/t_signup", methods=['POST', 'GET']) #sign up for teachers
+@app.route("/signup_success/<name>")
+def signup_success(name):
+    return render_template('teachers.html', name=name)
+
+@app.route("/t_signup", methods=['POST', 'GET'])  # sign up for teachers
 def teacher():
     if request.method == 'POST':
         tname = request.form['tname']
@@ -40,34 +46,33 @@ def teacher():
         tpw = request.form['tpassword']
         tpwc = request.form['tpasswordconfirm']
 
-        if not re.match(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", tmail):
+        if not re.match(r"[a-zA-Z0-9._%+-]+@gmail+\.[a-zA-Z]{2,}", tmail):
             flash("Please enter a valid email address (e.g., test@gmail.com)")
             return render_template('signup.html')
-
         else:
-
             tuser = Teacher.query.filter_by(email=tmail).first()
-
-            if tuser:
-                flash("Email address already exists, please login instead")
+            if tuser or tpw != tpwc:
+                if tuser:
+                    flash("Email address already exists, please login instead")
+                if tpw != tpwc:
+                    flash("You should re-enter the same password!")
                 return render_template('signup.html')
+            else:
+                #TODO: hashing password
+                new_tuser = Teacher(name=tname, email=tmail, password=tpw)
 
-            if tpw != tpwc:
-                flash("You should re-enter the same password!")
-                return render_template('signup.html')
+                try:
+                    teacher_db.session.add(new_tuser)
+                    teacher_db.session.commit()
+                    return redirect(url_for('signup_success', name=tname))
+                except Exception as e:
+                    flash(f"Error signing up: {str(e)}")
+                    return render_template('signup.html')
 
-            new_tuser = Teacher(name=tname, email=tmail, password=tpw)
-
-            try:
-                teacher_db.session.add(new_tuser)
-                teacher_db.session.commit()
-            except Exception as e:
-                flash(f"Error signing up: {str(e)}")
-                return render_template('signup.html')
-    else:
-        return render_template('signup.html')
+    return render_template('signup.html')
 
 
+#Use it for checking perfermance of signing up...
 @app.route("/teachers", methods=['GET'])
 def get_teachers():
     teachers = Teacher.query.all()
@@ -83,6 +88,6 @@ def get_teachers():
     return jsonify({'teachers': teacher_list})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
-    ##window.localstorage //for logins 
+     
