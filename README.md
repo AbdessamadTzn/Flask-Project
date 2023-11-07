@@ -18,5 +18,5 @@ My Flask project: Managing Absences at schools
 4. Install the required dependencies:  
      pip install -r requirements.txt
 
-5.Run the application:
+ 5.Run the application:
      python app.py
