@@ -3,7 +3,7 @@ My Flask project: Managing Absences at schools
 ## Installation
 
 1. **Clone the repository:**
-   ([git@github.com:AbdessamadTzn/Flask-Project.git](https://github.com/AbdessamadTzn/Flask-Project.git))
+   [git@github.com:AbdessamadTzn/Flask-Project.git](https://github.com/AbdessamadTzn/Flask-Project.git)
 
 2. **Create a virtual environment** (optional but recommended):
   python -m venv venv
