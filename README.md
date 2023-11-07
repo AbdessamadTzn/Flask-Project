@@ -16,7 +16,7 @@ My Flask project: Managing Absences at schools
       source venv/bin/activate
 
 4. Install the required dependencies:
-  pip install -r requirements.txt
+     pip install -r requirements.txt
 
 5.Run the application:
-  python app.py
+     python app.py
