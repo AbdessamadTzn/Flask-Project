@@ -9,13 +9,13 @@ My Flask project: Managing Absences at schools
   python -m venv venv
 
 3. Activate the virtual environment:
-  * On Windows:
+  * On Windows:  
       venv\Scripts\activate
 
-  * On macOS/Linux:
+  * On macOS/Linux:  
       source venv/bin/activate
 
-4. Install the required dependencies:
+4. Install the required dependencies:  
      pip install -r requirements.txt
 
 5.Run the application:
