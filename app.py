@@ -29,6 +29,24 @@ with app.app_context():
 @app.route("/")
 def index():
     return render_template('home.html')
+@app.route("/login_sucess/<m>")
+def log_suc(m):
+    return render_template('profile.html', m=m)
+
+@app.route("/", methods=['POST'])
+def login():
+    lmail = request.form['lmail']
+    lpw = request.form['lpassword']
+    #lrem = True if request.form['remember'] else False
+
+    log = Teacher.query.filter_by(email=lmail, password=lpw).first()
+
+    if not log:
+        flash('Please check you login details and try again!')
+        return render_template('home.html')
+    else:
+        return redirect(url_for('log_suc', m=log.name))
+    
 
 @app.route("/student")
 def student():
@@ -80,14 +98,14 @@ def get_teachers():
     for teacher in teachers:
         teacher_data = {
             'teacher_id': teacher.teacher_id,
+            'email': teacher.email,
             'name': teacher.name,
-            'email': teacher.email
+            'password': teacher.password
         }
         teacher_list.append(teacher_data)
 
     return jsonify({'teachers': teacher_list})
 
 if __name__ == '__main__':
-    app.run()
-
-     
+    app.run(debug=True)
+    
