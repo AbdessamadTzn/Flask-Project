@@ -1,5 +1,5 @@
 # Flask Project by: Abdessamad Touzani
-My Flask project: Managing Absences at schools
+My Flask project: Managing Absences at schools  
 Special **Thanks** to the **EXPERT** [SALAH IDDINE DIOURI](https://github.com/diouri844) for their valuable code review and insightful advice during the development of this project.
 ## Installation
 
