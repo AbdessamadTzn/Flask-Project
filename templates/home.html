@@ -27,7 +27,21 @@
       <b>This web application is a work in progress.</b><br />
       <b>You can just sign UP..Login Under Development</b>
     </p>
-    <form class="mx-auto" style="margin-top: 20px; max-width: 300px">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div
+      class="notification is-danger"
+      style="
+        background-color: #ff8080;
+        color: black;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+      "
+    >
+      {{ messages[0] }}
+    </div>
+    {% endif %} {% endwith %}
+    <form class="mx-auto" style="margin-top: 20px; max-width: 300px" action="/" method="POST">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label" style="color: black"
           >Email address</label
@@ -35,7 +49,8 @@
         <input
           type="email"
           class="form-control"
-          id="exampleInputEmail1"
+          id="teacher_log_mail"
+          name="teacher_log_mail"
           aria-describedby="emailHelp"
         />
       </div>
@@ -49,12 +64,13 @@
         <input
           type="password"
           class="form-control"
-          id="exampleInputPassword1"
+          id="teacher_log_password"
+          name="teacher_log_password"
         />
       </div>
       <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1" style="color: black"
+        <label class="form-check-label" for="exampleCheck1" name="remember" style="color: black"
           >Remember me</label
         >
       </div>
@@ -106,6 +122,11 @@
                   >&#x21bb; Last Modifications: 6/11/2023
                 </b>
               </p>
+              <p style="text-align: center">
+                <b style="color: red"
+                  >&#x21bb; Under Reviewing & Improvment...
+                </b>
+              </p>
               <p style="color: black">
                 <b>&#9745;Sign Up for teachers</b><br />
                 <b>&#9744;Log in...in progress...</b><br />
@@ -148,7 +169,7 @@
           window.location.href = "{{url_for('student')}}";
         }
         function redirectToSignUp() {
-          window.location.href = "{{url_for('teacher')}}";
+          window.location.href = "{{url_for('teacher_signup')}}";
         }
 
         function closeLastModifications() {
