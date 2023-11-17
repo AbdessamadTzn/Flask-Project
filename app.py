@@ -38,6 +38,7 @@ def login():
     lmail = request.form['lmail']
     lpw = request.form['lpassword']
     #lrem = True if request.form['remember'] else False
+    #Under improve & review...
 
     log = Teacher.query.filter_by(email=lmail, password=lpw).first()
 
