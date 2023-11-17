@@ -22,31 +22,31 @@ class Teacher(teacher_db.Model):
     def __repr__(self):
         return '<Teacher %r>' % self.name
 
-with app.app_context():
-    teacher_db.create_all()
+# with app.app_context():
+#     teacher_db.create_all()
 
 
 @app.route("/")
 def index():
     return render_template('home.html')
-@app.route("/login_sucess/<m>")
-def log_suc(m):
-    return render_template('profile.html', m=m)
+@app.route("/teachers/login_sucess/<teacherName>")
+def teacher_login_success(teacherName):
+    return render_template('profile.html', teacherName=teacherName)
 
 @app.route("/", methods=['POST'])
 def login():
-    lmail = request.form['lmail']
-    lpw = request.form['lpassword']
+    teacher_log_mail = request.form['teacher_log_mail']
+    teacher_log_password = request.form['teacher_log_password']
     #lrem = True if request.form['remember'] else False
     #Under improve & review...
 
-    log = Teacher.query.filter_by(email=lmail, password=lpw).first()
+    log = Teacher.query.filter_by(email=teacher_log_mail, password=teacher_log_password).first()
 
     if not log:
         flash('Please check you login details and try again!')
         return render_template('home.html')
     else:
-        return redirect(url_for('log_suc', m=log.name))
+        return redirect(url_for('teacher_login_success', teacherName=log.name))
     
 
 @app.route("/student")
@@ -57,8 +57,8 @@ def student():
 def signup_success(name):
     return render_template('teachers.html', name=name)
 
-@app.route("/t_signup", methods=['POST', 'GET'])  # sign up for teachers
-def teacher():
+@app.route("/teacher/signup", methods=['POST', 'GET'])  # sign up for teachers
+def teacher_signup():
     if request.method == 'POST':
         tname = request.form['tname']
         tmail = request.form['tmail']
