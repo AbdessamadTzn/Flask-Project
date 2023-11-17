@@ -49,8 +49,8 @@
         <input
           type="email"
           class="form-control"
-          id="lmail"
-          name="lmail"
+          id="teacher_log_mail"
+          name="teacher_log_mail"
           aria-describedby="emailHelp"
         />
       </div>
@@ -64,8 +64,8 @@
         <input
           type="password"
           class="form-control"
-          id="lpassword"
-          name="lpassword"
+          id="teacher_log_password"
+          name="teacher_log_password"
         />
       </div>
       <div class="mb-3 form-check">
@@ -122,6 +122,11 @@
                   >&#x21bb; Last Modifications: 6/11/2023
                 </b>
               </p>
+              <p style="text-align: center">
+                <b style="color: red"
+                  >&#x21bb; Under Reviewing & Improvment...
+                </b>
+              </p>
               <p style="color: black">
                 <b>&#9745;Sign Up for teachers</b><br />
                 <b>&#9744;Log in...in progress...</b><br />
@@ -164,7 +169,7 @@
           window.location.href = "{{url_for('student')}}";
         }
         function redirectToSignUp() {
-          window.location.href = "{{url_for('teacher')}}";
+          window.location.href = "{{url_for('teacher_signup')}}";
         }
 
         function closeLastModifications() {
