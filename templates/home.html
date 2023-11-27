@@ -166,10 +166,10 @@
           $("#lastModificationsModal").modal("show");
         });
         function redirectToStudentList() {
-          window.location.href = "{{url_for('student')}}";
+          window.location.href = "{{url_for('auth.student')}}";
         }
         function redirectToSignUp() {
-          window.location.href = "{{url_for('teacher_signup')}}";
+          window.location.href = "{{url_for('auth.teacher_signup')}}";
         }
 
         function closeLastModifications() {
