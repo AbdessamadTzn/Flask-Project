@@ -17,6 +17,7 @@
       padding: 20px;
       border-radius: 10px;
     "
+    
   >
     <h1 style="text-align: center; color: black">Welcome</h1>
     <p style="text-align: center; color: black">
@@ -28,18 +29,24 @@
       <b>You can just sign UP..Login Under Development</b>
     </p>
     {% with messages = get_flashed_messages() %} {% if messages %}
-    <div
-      class="notification is-danger"
-      style="
-        background-color: #ff8080;
-        color: black;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-      "
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" 
+    style="
+    background-color: #ff8080; 
+    color: black; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border-radius: 8px; 
+    position: relative;
+    "
     >
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="position: absolute; top: 0; right: 0; padding: 5px; background-color: transparent; border: none; cursor: pointer;">
+        <span aria-hidden="true" style="font-size: 20px;">&times;</span>
+      </button>
       {{ messages[0] }}
     </div>
+    
+    
+  
     {% endif %} {% endwith %}
     <form class="mx-auto" style="margin-top: 20px; max-width: 300px" action="/" method="POST">
       <div class="mb-3">
@@ -162,6 +169,14 @@
         </div>
       </div>
       <script>
+  //         $(document).ready(function () {
+  //   // Check if the modal has been displayed in this session
+  //   if (!sessionStorage.getItem('lastModificationsModalShown')) {
+  //     // If not, show the modal and set the flag
+  //     $("#lastModificationsModal").modal("show");
+  //     sessionStorage.setItem('lastModificationsModalShown', 'true');
+  //   }
+  // });
         $(document).ready(function () {
           $("#lastModificationsModal").modal("show");
         });
