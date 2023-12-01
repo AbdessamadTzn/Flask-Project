@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import re
 
 
-db=SQLAlchemy()
+from extensions import db
 DB_NAME = "teachers.db"
 
 app = Flask(__name__)

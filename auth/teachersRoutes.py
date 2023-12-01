@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+import re
+from passlib.hash import pbkdf2_sha256
 
 authTeachers = Blueprint('auth', __name__)
+from models import Teacher
+from extensions import db
 
 
 @authTeachers.route("/teachers/login_sucess/<teacherName>")
@@ -20,7 +24,7 @@ def login():
         flash('Please check you login details and try again!')
         return render_template('home.html')
     else:
-        return redirect(url_for('teacher_login_success', teacherName=log.name))
+        return redirect(url_for('auth.teacher_login_success', teacherName=log.name))
     
 @authTeachers.route("/student")
 def student():
@@ -33,47 +37,34 @@ def signup_success(name):
 @authTeachers.route("/teacher/signup", methods=['POST', 'GET'])  # sign up for teachers
 def teacher_signup():
     if request.method == 'POST':
-        tname = request.form['tname']
-        tmail = request.form['tmail']
-        tpw = request.form['tpassword']
-        tpwc = request.form['tpasswordconfirm']
+        teacherName = request.form['tname']
+        teacherMail = request.form['tmail']
+        teacherPassword = request.form['tpassword']
+        teacherPasswordConfirm = request.form['tpasswordconfirm']
 
-        if not re.match(r"[a-zA-Z0-9._%+-]+@gmail+\.[a-zA-Z]{2,}", tmail):
+        if not re.match(r"[a-zA-Z0-9._%+-]+@gmail+\.[a-zA-Z]{2,}", teacherMail):
             flash("Please enter a valid email address (e.g., test@gmail.com)")
             return render_template('signup.html')
         else:
-            tuser = Teacher.query.filter_by(email=tmail).first()
-            if tuser or tpw != tpwc:
-                if tuser:
+            teacherExist = Teacher.query.filter_by(email=teacherMail).first()
+            if teacherExist or teacherPassword != teacherPasswordConfirm:
+                if teacherExist:
                     flash("Email address already exists, please login instead")
-                if tpw != tpwc:
+                if teacherPassword != teacherPasswordConfirm:
                     flash("You should re-enter the same password!")
                 return render_template('signup.html')
             else:
-                #TODO: hashing password
-                new_tuser = Teacher(name=tname, email=tmail, password=tpw)
+                teacher_hashed_password = pbkdf2_sha256.hash(teacherPassword)
+                new_tuser = Teacher(name=teacherName, email=teacherMail, password=teacher_hashed_password)
 
                 try:
-                    teacher_db.session.add(new_tuser)
-                    teacher_db.session.commit()
-                    return redirect(url_for('signup_success', name=tname))
+                    db.session.add(new_tuser)
+                    db.session.commit()
+                    return redirect(url_for('auth.signup_success', name=teacherName))
                 except Exception as e:
                     flash(f"Error signing up: {str(e)}")
                     return render_template('signup.html')
 
     return render_template('signup.html')
-@authTeachers.route("/teachers", methods=['GET'])
-def get_teachers():
-    teachers = Teacher.query.all()
-    teacher_list = []
-    for teacher in teachers:
-        teacher_data = {
-            'teacher_id': teacher.teacher_id,
-            'email': teacher.email,
-            'name': teacher.name,
-            'password': teacher.password
-        }
-        teacher_list.append(teacher_data)
-        
-    return jsonify({'teachers': teacher_list})
+
 
