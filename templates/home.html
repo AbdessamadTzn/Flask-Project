@@ -1,206 +1,208 @@
 {% extends 'base.html' %} {% block title %} Home {% endblock %} {% block content
-%}
-<div
-  style="
-    background-image: url('/static/images/home-bg.jpg');
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  "
->
+  %}
   <div
     style="
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-radius: 10px;
+      background-image: url('/static/images/home-bg.jpg');
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     "
-    
   >
-    <h1 style="text-align: center; color: black">Welcome</h1>
-    <p style="text-align: center; color: black">
-      If you are a teacher, please Log In
-    </p>
-    <p style="text-align: center; color: red">
-      <b>Note: Project Under Development</b><br />
-      <b>This web application is a work in progress.</b><br />
-      <b>You can just sign UP..Login Under Development</b>
-    </p>
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" 
-    style="
-    background-color: #ff8080; 
-    color: black; 
-    padding: 10px; 
-    margin-bottom: 10px; 
-    border-radius: 8px; 
-    position: relative;
-    "
-    >
-      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="position: absolute; top: 0; right: 0; padding: 5px; background-color: transparent; border: none; cursor: pointer;">
-        <span aria-hidden="true" style="font-size: 20px;">&times;</span>
-      </button>
-      {{ messages[0] }}
-    </div>
-    
-    
+    <div
+      style="
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+      "
   
-    {% endif %} {% endwith %}
-    <form class="mx-auto" style="margin-top: 20px; max-width: 300px" action="/" method="POST">
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" style="color: black"
-          >Email address</label
-        >
-        <input
-          type="email"
-          class="form-control"
-          id="teacher_log_mail"
-          name="teacher_log_mail"
-          aria-describedby="emailHelp"
-        />
-      </div>
-      <div class="mb-3">
-        <label
-          for="exampleInputPassword1"
-          class="form-label"
-          style="color: black"
-          >Password</label
-        >
-        <input
-          type="password"
-          class="form-control"
-          id="teacher_log_password"
-          name="teacher_log_password"
-        />
-      </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1" name="remember" style="color: black"
-          >Remember me</label
-        >
-      </div>
-
-      <button type="submit" class="btn btn-primary">LogIn</button>
-      <span style="color: black">or</span>
-      <button
-        type="button"
-        class="btn btn-primary"
-        onclick="redirectToSignUp()"
+    >
+      <h1 style="text-align: center; color: black">Welcome</h1>
+      <p style="text-align: center; color: black">
+        If you are a teacher, please Log In
+      </p>
+      <p style="text-align: center; color: red">
+        <b>Note: Project Under Development</b><br />
+        <b>This web application is a work in progress.</b><br />
+        <b>You can just sign UP..Login Under Development</b>
+      </p>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert"
+      style="
+      background-color: #ff8080;
+      color: black;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      position: relative;
+      "
       >
-        Sign Up
-      </button>
-      <br />
-      <br />
-      <button
-        type="button"
-        class="btn btn-primary"
-        onclick="redirectToStudentList()"
-      >
-        I'm a student
-      </button>
-      <div
-        class="modal"
-        tabindex="-1"
-        role="dialog"
-        id="lastModificationsModal"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" style="color: black">
-                Last Modifications
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                onclick="closeLastModifications()"
-              >
-                <span aria-hidden="true" style="color: black">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <!-- Add your content for last modifications here -->
-              <p style="text-align: center">
-                <b style="color: red"
-                  >&#x21bb; Last Modifications: 6/11/2023
-                </b>
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="position: absolute; top: 0; right: 0; padding: 5px; background-color: transparent; border: none; cursor: pointer;">
+          <span aria-hidden="true" style="font-size: 20px;">&times;</span>
+        </button>
+        {{ messages[0] }}
+      </div>
+  
+  
+  
+      {% endif %} {% endwith %}
+      <form class="mx-auto" style="margin-top: 20px; max-width: 300px" action="/" method="POST">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label" style="color: black"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="teacher_log_mail"
+            name="teacher_log_mail"
+            aria-describedby="emailHelp"
+          />
+        </div>
+        <div class="mb-3">
+          <label
+            for="exampleInputPassword1"
+            class="form-label"
+            style="color: black"
+            >Password</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            id="teacher_log_password"
+            name="teacher_log_password"
+          />
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+          <label class="form-check-label" for="exampleCheck1" name="remember" style="color: black"
+            >Remember me</label
+          >
+        </div>
+  
+        <button type="submit" class="btn btn-primary">LogIn</button>
+        <span style="color: black">or</span>
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="redirectToSignUp()"
+        >
+          Sign Up
+        </button>
+        <br />
+        <br />
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="redirectToStudentList()"
+        >
+          I'm a student
+        </button>
+        <div
+          class="modal"
+          tabindex="-1"
+          role="dialog"
+          id="lastModificationsModal"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" style="color: black">
+                  Last Modifications
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onclick="closeLastModifications()"
+                >
+                  <span aria-hidden="true" style="color: black">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- Add your content for last modifications here -->
+                <p style="text-align: center">
+                  <b style="color: red"
+                    >&#x21bb; Last Modifications: 12/02/2023
+                  </b>
+                </p>
+                <p style="text-align: center">
+                  <b style="color: red"
+                    >&#x21bb; Under Reviewing & Improvment...
+                  </b>
+                </p>
+                <p style="color: black">
+                  <b>&#9745;Sign Up for teachers</b><br />
+                  <b>&#9745;Login for teachers</b><br />
+                  <b style="color: black">&#9744;CRUD for teachers...in progress</b><br />
+                  <b>&#9744;Documentation...soon</b>
+                <hr style="color: black" />
+                <b style="color: black">&#9745;Inscription et connection pour les enseignants</b><br />
+                <b style="color: black">&#9744;CRUD pour les enseignants...en cours</b><br />
+                <b style="color: black">&#9744;Documentation... à venir bientôt</b>
               </p>
-              <p style="text-align: center">
-                <b style="color: red"
-                  >&#x21bb; Under Reviewing & Improvment...
-                </b>
-              </p>
-              <p style="color: black">
-                <b>&#9745;Sign Up for teachers</b><br />
-                <b>&#9744;Log in...in progress...</b><br />
-                <b>&#9744;Documentation...soon</b>
-              <hr style="color: black" />
-              <b style="color: black">&#9745;Inscription pour les enseignants</b><br />
-              <b style="color: black">&#9744;"Se connecter"..en cours d’implémentation...</b><br />
-              <b style="color: black">&#9744;Documentation... à venir bientôt</b>
-            </p>
-            </div>
-
-            <div class="modal-footer">
-              <p style="color: blueviolet">
-                See documentation for more | Voir la documentation pour plus de
-                detail
-              </p>
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="redirectToDocumentationEnglish()"
-              >
-                Englsih Version
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="redirectToDocumentationFrench()"
-              >
-                Version Français
-              </button>
+              </div>
+  
+              <div class="modal-footer">
+                <p style="color: blueviolet">
+                  See documentation for more | Voir la documentation pour plus de
+                  detail
+                </p>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="redirectToDocumentationEnglish()"
+                >
+                  Englsih Version
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="redirectToDocumentationFrench()"
+                >
+                  Version Français
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <script>
-  //         $(document).ready(function () {
-  //   // Check if the modal has been displayed in this session
-  //   if (!sessionStorage.getItem('lastModificationsModalShown')) {
-  //     // If not, show the modal and set the flag
-  //     $("#lastModificationsModal").modal("show");
-  //     sessionStorage.setItem('lastModificationsModalShown', 'true');
-  //   }
-  // });
-        $(document).ready(function () {
-          $("#lastModificationsModal").modal("show");
-        });
-        function redirectToStudentList() {
-          window.location.href = "{{url_for('auth.student')}}";
-        }
-        function redirectToSignUp() {
-          window.location.href = "{{url_for('auth.teacher_signup')}}";
-        }
-
-        function closeLastModifications() {
-          $("#lastModificationsModal").modal("hide");
-        }
-        function redirectToDocumentationEnglish() {
-          // Replace 'your-documentation-link' with the actual link
-          window.location.href = "your-documentation-link";
-        }
-        function redirectToDocumentationFrench() {
-          // Replace 'your-documentation-link' with the actual link
-          window.location.href = "your-documentation-link";
-        }
-      </script>
-    </form>
-
-    {% endblock %}
+        <script>
+    //         $(document).ready(function () {
+    //   // Check if the modal has been displayed in this session
+    //   if (!sessionStorage.getItem('lastModificationsModalShown')) {
+    //     // If not, show the modal and set the flag
+    //     $("#lastModificationsModal").modal("show");
+    //     sessionStorage.setItem('lastModificationsModalShown', 'true');
+    //   }
+    // });
+          $(document).ready(function () {
+            $("#lastModificationsModal").modal("show");
+          });
+          function redirectToStudentList() {
+            window.location.href = "{{url_for('auth.student')}}";
+          }
+          function redirectToSignUp() {
+            window.location.href = "{{url_for('auth.teacher_signup')}}";
+          }
+  
+          function closeLastModifications() {
+            $("#lastModificationsModal").modal("hide");
+          }
+          function redirectToDocumentationEnglish() {
+            // Replace 'your-documentation-link' with the actual link
+            window.location.href = "your-documentation-link";
+          }
+          function redirectToDocumentationFrench() {
+            // Replace 'your-documentation-link' with the actual link
+            window.location.href = "your-documentation-link";
+          }
+        </script>
+      </form>
+  
+      {% endblock %}
+    </div>
   </div>
-</div>
+  
