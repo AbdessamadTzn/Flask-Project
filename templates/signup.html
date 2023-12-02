@@ -37,7 +37,8 @@
         border-radius: 8px;
       "
     >
-      {{ messages[0] }}. Go to <a href="{{ url_for('index') }}">Login Page</a>.
+      {{ messages[0] }}. Go to
+      <a href="{{ url_for('views.index') }}">Login Page</a>.
     </div>
     {% endif %} {% endwith %}
     <form
