@@ -1,2 +1,0 @@
-at end: ##window.localstorage //for logins
-remove debug=True before deploying
