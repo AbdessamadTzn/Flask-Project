@@ -5,7 +5,8 @@ import re
 
 
 from extensions import db
-DB_NAME = "teachers.db"
+DB_NAME = "abdessamad.db"
+
 
 app = Flask(__name__)
 
