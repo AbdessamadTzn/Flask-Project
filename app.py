@@ -1,6 +1,17 @@
+import os
 from flask import Flask, render_template
+import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+try:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
+except Exception as e:
+    print(f'Error loading Data Base: {e}')
+print('Loaded!')
+
 
 @app.route('/')
 def index():
