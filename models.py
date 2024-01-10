@@ -1,32 +1,28 @@
 from extensions import db
 
-'''
-A teacher will aadd students to list if teacher.course==student.student
-->Assign course to student
-->Assign course to teacher
-->Teacher check absence of student: True or False
-Teacher-Student: Many to Many using course table
-
-
-'''
+courses = db.Table(
+    'courses', 
+    db.Column('teacher_id', db.Integer, db.ForeignKey('teachers.id')),
+    db.Column('student_id', db.Integer, db.ForeignKey('students.id'))
+)
 
 class Teacher(db.Model):
-    __table__ == 'teachers'
+    __tablename__ = 'teachers'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(50), nullable=True, unique = True)
+    email = db.Column(db.String(50), nullable=True, unique=True)
     password = db.Column(db.String(20))
-
+    students = db.relationship('Student', secondary=courses, lazy='subquery', backref=db.backref('teachers', lazy=True))
 
     def __repr__(self):
-        return f'<Teachers: {self.name}>'
+        return f'<Teacher {self.name}>'
 
 class Student(db.Model):
-    __table__ == 'students'
+    __tablename__ = 'students'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(50), nullable=True, unique = True)
+    email = db.Column(db.String(50), nullable=True, unique=True)
     password = db.Column(db.String(20))
 
     def __repr__(self):
-        return f'<Students: {self.name}>'
+        return f'<Student {self.name}>'
