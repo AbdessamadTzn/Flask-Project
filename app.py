@@ -5,20 +5,12 @@ from dotenv import load_dotenv
 from extensions import db
 from models import Teacher, Student
 
-load_dotenv()
 
 app = Flask(__name__)
 
-try:
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
-except Exception as e:
-    print(f'Error loading Data Base: {e}')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'db', 'app.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
-
-
-# with app.app_context():
-#     db.create_all()
 
 
 @app.route('/')
@@ -27,4 +19,13 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run()
+    # Create the 'db' directory if it doesn't exist
+    db_dir = os.path.join(os.getcwd(), 'db')
+    os.makedirs(db_dir, exist_ok=True)
+
+    # Create the database tables
+    with app.app_context():
+        db.create_all()
+
+    # Run the Flask application
+    app.run(debug=True)
