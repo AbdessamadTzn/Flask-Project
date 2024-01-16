@@ -1,3 +1,4 @@
 .env/
 utility_scripts.py
 add_student.py
+add_majors.py
