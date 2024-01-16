@@ -1,0 +1,113 @@
+{% extends 'base.html' %} {% block title %} Home {% endblock %} {% block content
+%}
+<div
+  style="
+    background-image: url('/static/images/teacherssignup.jpg');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  "
+>
+  <div
+    style="
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+    "
+  >
+    <h1 style="text-align: center; color: black">Welcome</h1>
+    <p style="text-align: center; color: black">
+      Hello Please sign up with your teacher's email
+      <!--here, without verification, assuning teachers already ave their own mail, and will use them -->
+    </p>
+    <p style="text-align: center; color: red">
+      <b>Note: Project Under Development</b><br />
+    </p>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div
+      class="notification is-danger"
+      style="
+        background-color: #ff8080;
+        color: black;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+      "
+    >
+      {{ messages[0] }}. Go to
+      <a href="{{ url_for('index') }}">Login Page</a>.
+    </div>
+    {% endif %} {% endwith %}
+    <form
+      class="mx-auto"
+      style="margin-top: 20px; max-width: 300px"
+      action="/teacher/signup"
+      method="POST"
+    >
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label" style="color: black"
+          >Name</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="tname"
+          name="tname"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label" style="color: black"
+          >Email address</label
+        >
+        <input
+          type="email"
+          class="form-control"
+          id="tmail"
+          name="tmail"
+          aria-describedby="emailHelp"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          title="Enter a valid email address (e.g., abdessamadtest@gmail.com)"
+          required
+          placeholder="abdessamadtest@gmail.com"
+        />
+      </div>
+      <div class="mb-3">
+        <label
+          for="exampleInputPassword1"
+          class="form-label"
+          style="color: black"
+          >Password</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="tpassword"
+          name="tpassword"
+          placeholder="Enter password"
+        />
+      </div>
+      <div class="mb-3">
+        <label
+          for="exampleInputPassword1"
+          class="form-label"
+          style="color: black"
+          >Password</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="tpasswordconfirm"
+          name="tpasswordconfirm"
+          placeholder="Re-enter the password again"
+        />
+      </div>
+      <input type="submit" value="Sign Up" />
+    </form>
+
+    {% endblock %}
+  </div>
+</div>
