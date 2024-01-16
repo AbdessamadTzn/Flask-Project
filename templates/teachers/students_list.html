@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/teachers.css') }}"
+/>
+{% endblock %} {% block title %} Home {% endblock %} {% block content%}
+
+<h3>Welcome Mr. {{ teacherName }}, here is your students's list</h3>
+
+<table>
+  <tr>
+    <th>Student Name</th>
+    <th>Student email</th>
+  </tr>
+  {% for student in students %}
+  <tr>
+    <td>{{student.name}}</td>
+    <td>{{student.email}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}
