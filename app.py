@@ -8,14 +8,33 @@ from models import Teacher, Student
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'DJODNCWOICNWOIEACJOIEWJ'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'db', 'app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
+from auth.Teachers import authTeachers
+
+app.register_blueprint(authTeachers, url_prefix='/')
 
 @app.route('/')
 def index():
     return render_template('home.html')
+@app.route('/Teachers')
+def get_students():
+    students = Teacher.query.all()
+    student_list = []
+    for student in students:
+        student_data = {
+            'student_id': student.id,
+            'email': student.email,
+            'name': student.name,
+            'Hashed Password': student.password
+        }
+        student_list.append(student_data)
+
+    return jsonify({'teachers': student_list})
+
 
 
 if __name__ == '__main__':
