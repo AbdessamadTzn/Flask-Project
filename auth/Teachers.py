@@ -1,15 +1,15 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 import re
 from passlib.hash import pbkdf2_sha256
 
-authTeachers = Blueprint('auth', __name__)
-from models import Teacher
+from models import Teacher, Student
 from extensions import db
 
+authTeachers = Blueprint('auth', __name__)
 
 @authTeachers.route("/teachers/login_sucess/<teacherName>")
 def teacher_login_success(teacherName):
-    return render_template('profile.html', teacherName=teacherName)
+    return render_template('teachers/home.html', teacherName=teacherName)
 
 @authTeachers.route("/", methods=['POST'])
 def login():
@@ -32,13 +32,13 @@ def login():
         return render_template('home.html')
 
     
-@authTeachers.route("/student")
-def student():
-    return render_template('studentlist.html')
+# @authTeachers.route("/student")
+# def student():
+#     return render_template('studentlist.html')
 
-@authTeachers.route("/signup_success/<name>")
-def signup_success(name):
-    return render_template('teachers.html', name=name)
+# @authTeachers.route("/signup_success/<name>")
+# def signup_success(name):
+#     return render_template('teachers.html', name=name)
 
 @authTeachers.route("/teacher/signup", methods=['POST', 'GET'])  # sign up for teachers
 def teacher_signup():
@@ -69,8 +69,10 @@ def teacher_signup():
                     return redirect(url_for('auth.signup_success', name=teacherName))
                 except Exception as e:
                     flash(f"Error signing up: {str(e)}")
-                    return render_template('signup.html')
+                    return render_template('teachers/signup.html')
 
-    return render_template('signup.html')
-
-
+    return render_template('teachers/signup.html')
+@authTeachers.route('/teachers/student_list/<teacherName>', methods=['GET'])
+def get_students(teacherName):
+    students = Student.query.all()
+    return render_template('teachers/students_list.html', teacherName=teacherName, students=students)

@@ -1,43 +1,50 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
-from flask_sqlalchemy import SQLAlchemy
-import re
-
-
+from flask import Flask, render_template, jsonify
+import psycopg2
+from dotenv import load_dotenv
 from extensions import db
-DB_NAME = "teachers.db"
+from models import Teacher, Student
+
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'DJODNCWOICNWOIEACJOIEWJ'
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'db', 'app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
-from views.views import views
-from auth.teachersRoutes import authTeachers
+from auth.Teachers import authTeachers
 
-
-app.register_blueprint(views, url_prefix='/')
 app.register_blueprint(authTeachers, url_prefix='/')
 
+@app.route('/')
+def index():
+    return render_template('home.html')
+@app.route('/Teachers')
+def get_students():
+    students = Teacher.query.all()
+    student_list = []
+    for student in students:
+        student_data = {
+            'student_id': student.id,
+            'email': student.email,
+            'name': student.name,
+            'Hashed Password': student.password
+        }
+        student_list.append(student_data)
 
-
-# with app.app_context():
-#     teacher_db.create_all()
-
-
-
-
-
-
-
-
-
-#Use it for checking perfermance of signing up...
+    return jsonify({'teachers': student_list})
 
 
 
 if __name__ == '__main__':
+    # Create the 'db' directory if it doesn't exist
+    db_dir = os.path.join(os.getcwd(), 'db')
+    os.makedirs(db_dir, exist_ok=True)
+
+    # Create the database tables
+    with app.app_context():
+        db.create_all()
+
+    # Run the Flask application
     app.run(debug=True)
-    
