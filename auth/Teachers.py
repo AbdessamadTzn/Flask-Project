@@ -5,7 +5,7 @@ from passlib.hash import pbkdf2_sha256
 from models import Teacher, Student
 from extensions import db
 
-authTeachers = Blueprint('auth', __name__)
+authTeachers = Blueprint('authTeacher', __name__)
 
 @authTeachers.route("/teachers/login_sucess/<teacherName>")
 def teacher_login_success(teacherName):
