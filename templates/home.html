@@ -91,7 +91,7 @@
             <button
                     type="button"
                     class="btn btn-primary"
-                    onclick="redirectToStudentList()"
+                    onclick="redirectToStudentPage()"
             >
                 I'm a student
             </button>
@@ -120,33 +120,25 @@
                         <div class="modal-body">
                             <!-- Add your content for last modifications here -->
                             <p style="text-align: center">
-                                <b style="color: blueviolet"
-                                >&#x21bb; Last Modifications: 12/02/2023
-                                </b>
+                                <!-- <b style="color: blueviolet"
+                                >&#x21bb; Last Modifications: 17/01/2023
+                                </b> -->
                                 <br>
                                 <b style="color: red"
-                                >NOTE: Because of modifications and hosting server..some features may not works as excpected, but it's working in local, so you can check the <a href="https://github.com/AbdessamadTzn/Flask-Project/"
-                                                                    target="_blank">GITHUB</a> Repo of the project!
+                                >
+                                Pour le code source : <a href="https://github.com/AbdessamadTzn/Flask-Project/" target="_blank">GITHUB</a>
                                 </b>
                             </p>
-                            <p style="text-align: center">
-                                <b style="color: blueviolet"
-                                >&#x21bb; Under Reviewing & Improvment...
-                                </b>
-                            </p>
+
                             <p style="color: black">
-                                <b>&#9745;Sign Up for teachers</b><br />
-                                <b>&#9745;Login for teachers</b><br />
-                                <b style="color: black">&#9744;CRUD for teachers...in progress</b><br />
-                                <b>&#9744;Documentation...soon</b>
                                 <hr style="color: black" />
                                 <b style="color: black">&#9745;Inscription et connection pour les enseignants</b><br />
-                                <b style="color: black">&#9744;CRUD pour les enseignants...en cours</b><br />
-                                <b style="color: black">&#9744;Documentation... à venir bientôt</b>
+                                <b style="color: black">&#9744;'CRUD' pour les enseignants...en cours</b><br />
+                                <b style="color: black">&#9744;'Token login session' pour les enseignants...en cours</b><br />
                             </p>
                         </div>
 
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
                             <p style="color: blueviolet">
                                 See documentation for more | Voir la documentation pour plus de
                                 detail
@@ -165,12 +157,12 @@
                             >
                                 Version Français
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
             <script>
-                var teacherSignupUrl = "{{ url_for('auth.teacher_signup') }}";
+                var teacherSignupUrl = "{{ url_for('authTeacher.teacher_signup') }}";
 
                 $(document).ready(function () {
                     $("#lastModificationsModal").modal("show");
@@ -179,6 +171,12 @@
                 function redirectToSignUp() {
                     window.location.href = teacherSignupUrl;
                 }
+                function closeLastModifications() {
+            $("#lastModificationsModal").modal("hide");
+          }
+          function redirectToStudentPage(){
+            window.location.href = "{{url_for('authStudent.student')}}";
+          }
             </script>
         </form>
 
