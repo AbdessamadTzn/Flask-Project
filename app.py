@@ -14,8 +14,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 from auth.Teachers import authTeachers
+from auth.Students import authStudents
 
 app.register_blueprint(authTeachers, url_prefix='/')
+app.register_blueprint(authStudents, url_prefix='/')
 
 @app.route('/')
 def index():
