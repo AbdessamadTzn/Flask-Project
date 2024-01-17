@@ -23,7 +23,7 @@ def login():
 
     if teacherLogin:
         if pbkdf2_sha256.verify(teacher_log_password, teacherLogin.password):
-            return redirect(url_for('auth.teacher_login_success', teacherName=teacherLogin.name))
+            return redirect(url_for('authTeacher.teacher_login_success', teacherName=teacherLogin.name))
         else:
             flash("Your password is incorrect!")
             return render_template('home.html')
@@ -36,9 +36,9 @@ def login():
 # def student():
 #     return render_template('studentlist.html')
 
-# @authTeachers.route("/signup_success/<name>")
-# def signup_success(name):
-#     return render_template('teachers.html', name=name)
+@authTeachers.route("/signup_success/<name>")
+def signup_success(name):
+    return render_template('<h2>HI {name}, you can login now', name=name)
 
 @authTeachers.route("/teacher/signup", methods=['POST', 'GET'])  # sign up for teachers
 def teacher_signup():
@@ -50,7 +50,7 @@ def teacher_signup():
 
         if not re.match(r"[a-zA-Z0-9._%+-]+@gmail+\.[a-zA-Z]{2,}", teacherMail):
             flash("Please enter a valid email address (e.g., test@gmail.com)")
-            return render_template('signup.html')
+            return render_template('teachers/signup.html')
         else:
             teacherExist = Teacher.query.filter_by(email=teacherMail).first()
             if teacherExist or teacherPassword != teacherPasswordConfirm:
@@ -58,7 +58,7 @@ def teacher_signup():
                     flash("Email address already exists, please login instead")
                 if teacherPassword != teacherPasswordConfirm:
                     flash("You should re-enter the same password!")
-                return render_template('signup.html')
+                return render_template('teachers/signup.html')
             else:
                 teacher_hashed_password = pbkdf2_sha256.hash(teacherPassword)
                 new_tuser = Teacher(name=teacherName, email=teacherMail, password=teacher_hashed_password)
@@ -66,7 +66,8 @@ def teacher_signup():
                 try:
                     db.session.add(new_tuser)
                     db.session.commit()
-                    return redirect(url_for('auth.signup_success', name=teacherName))
+                    flash('You have successfully signed up! Please log in.', 'success')
+                    return render_template('home.html')
                 except Exception as e:
                     flash(f"Error signing up: {str(e)}")
                     return render_template('teachers/signup.html')
