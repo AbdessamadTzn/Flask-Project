@@ -26,6 +26,8 @@
             <b>This web application is a work in progress.</b><br />
             <b>You can just sign UP..Login Under Development</b>
         </p>
+
+
         {% with messages = get_flashed_messages() %} {% if messages %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert"
              style="
@@ -41,6 +43,9 @@
             </button>
             {{ messages[0] }}
         </div>
+        <div class="alert alert-{{ messages[0][1] }}" role="alert">
+            {{ messages[0][0] }}
+          </div>
 
         {% endif %} {% endwith %}
         <form class="mx-auto" style="margin-top: 20px; max-width: 300px" action="/" method="POST">

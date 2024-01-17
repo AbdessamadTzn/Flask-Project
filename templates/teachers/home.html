@@ -8,7 +8,7 @@ content %}
 </button>
 <script>
   var studentsList =
-    "{{ url_for('auth.get_students', teacherName=teacherName, students=students) }}";
+    "{{ url_for('authTeacher.get_students', teacherName=teacherName, students=students) }}";
 
   $(document).ready(function () {
     $("#lastModificationsModal").modal("show");
