@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 import re
 from passlib.hash import pbkdf2_sha256
 
-from models import Teacher, Student
+from models import Teacher
 from extensions import db
 
 authTeachers = Blueprint('authTeacher', __name__)
