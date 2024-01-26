@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block title %} {{m}} {% endblock %} {% block
+content %}
+<div class="student">
+  <h1>Add Student</h1>
+
+  <br />
+  <form action="/add_student" method="POST">
+    <input type="text" name="student_name" id="student_name" />
+    <input type="email" name="student_mail" id="student_mail" />
+    <input type="submit" value="add" />
+  </form>
+</div>
+{% endblock %}

@@ -2,12 +2,12 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 import re
 from passlib.hash import pbkdf2_sha256
 
-from models import Teacher
+from models import Teacher, Student
 from extensions import db
 
 authTeachers = Blueprint('authTeacher', __name__)
 
-@authTeachers.route("/teachers/login_sucess/<teacherName>")
+@authTeachers.route("/teachers/login_success/<teacherName>")
 def teacher_login_success(teacherName):
     return render_template('teachers/home.html', teacherName=teacherName)
 
@@ -28,10 +28,27 @@ def login():
             flash("Your password is incorrect!")
             return render_template('home.html')
     else:
-        flash('Your email is incorrect!')
+        flash('Your email is isncorrect!')
         return render_template('home.html')
 
-    
+@authTeachers.route('teachers/add_student', methods=['GET', 'POST'])
+def add_student():
+    #TODO: Handle studentExist = Student.query.filter_by(id=id).first()
+
+    if request.method == 'POST':
+        studentName = request.form['student_name']
+        studentEmail = request.form['student_mail']
+        studentPassword = pbkdf2_sha256.hash('123')
+        new_student = Student(name=studentName, email=studentEmail, password=studentPassword)
+        try:
+            db.session.add(new_student)
+            db.session.commit()
+            flash('You have successfully add a student!', 'success')
+            return render_template('teachers/students_list')
+        except Exception as e:
+            flash(f"Error adding student: {str(e)}")
+            return render_template('teachers/add_student.html')
+    return render_template('teachers/add_student.html')
 # @authTeachers.route("/student")
 # def student():
 #     return render_template('studentlist.html')
