@@ -6,24 +6,25 @@ from extensions import db
 
 authStudents = Blueprint('authStudent', __name__)
 
-@authStudents.route('/students/home', methods=['POST'])
+@authStudents.route('/students/home', methods=['POST', 'GET'])
 def student():
-    student_log_mail = request.form['student_log_mail']
-    student_log_password = request.form['student_log_password']
+    if request.method == 'POST':
+        student_log_mail = request.form['student_log_mail']
+        student_log_password = request.form['student_log_password']
 
-    try:
-        studentLogin = Student.query.filter_by(email=teacher_log_mail).first()
-    except Exception as e:
-        print(f"Error, query student's mail {str(e)}")
-    
-    if studentLogin:
-        if pbkdf2_sha256(student_log_password, studentLogin.student_log_password):
-            pass
+        try:
+            studentLogin = Student.query.filter_by(email=student_log_mail).first()
+        except Exception as e:
+            print(f"Error, query student's mail {str(e)}")
+        
+        if studentLogin:
+            if pbkdf2_sha256(student_log_password, studentLogin.student_log_password):
+                return render_template('home.html')
+            else:
+                pass
         else:
-            pass
-    else:
-        flash("This email doesn't exist!")
-        return render_template('students/home.html')
+            flash("This email doesn't exist!")
+            return render_template('students/home.html')
 
 
     return render_template('students/home.html')
