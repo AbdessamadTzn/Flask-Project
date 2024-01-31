@@ -46,7 +46,7 @@ def add_student():
             db.session.add(new_student)
             db.session.commit()
             flash('You have successfully add a student!', 'success')
-            return render_template('teachers/students_list', studentName = studentName)
+            return render_template('teachers/students_list.html', studentName = studentName)
         except Exception as e:
             flash(f"Error adding student: {str(e)}")
             return render_template('teachers/add_student.html')
