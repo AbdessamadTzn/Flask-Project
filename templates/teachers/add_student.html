@@ -4,9 +4,13 @@ content %}
   <h1>Add Student</h1>
 
   <br />
-  <form action="/add_student" method="POST">
-    <input type="text" name="student_name" id="student_name" />
-    <input type="email" name="student_mail" id="student_mail" />
+  <form action="/teachers/add_student" method="POST">
+    <input
+      type="text"
+      name="student_name"
+      id="student_name"
+      placeholder="Enter student name"
+    />
     <input type="submit" value="add" />
   </form>
 </div>

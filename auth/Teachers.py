@@ -37,14 +37,16 @@ def add_student():
 
     if request.method == 'POST':
         studentName = request.form['student_name']
-        studentEmail = request.form['student_mail']
-        studentPassword = pbkdf2_sha256.hash('123')
+        studentEmail = studentName + '@schoolname.com'
+        
+        passwordString = f'{studentName}#schoolname'
+        studentPassword = pbkdf2_sha256.hash(passwordString)
         new_student = Student(name=studentName, email=studentEmail, password=studentPassword)
         try:
             db.session.add(new_student)
             db.session.commit()
             flash('You have successfully add a student!', 'success')
-            return render_template('teachers/students_list')
+            return render_template('teachers/students_list', student = new_student.name)
         except Exception as e:
             flash(f"Error adding student: {str(e)}")
             return render_template('teachers/add_student.html')
