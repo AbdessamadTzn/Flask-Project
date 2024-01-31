@@ -46,11 +46,14 @@ def add_student():
             db.session.add(new_student)
             db.session.commit()
             flash('You have successfully add a student!', 'success')
-            return render_template('teachers/students_list', student = new_student.name)
+            return render_template('teachers/students_list', studentName = studentName)
         except Exception as e:
             flash(f"Error adding student: {str(e)}")
             return render_template('teachers/add_student.html')
     return render_template('teachers/add_student.html')
+@authTeachers.route('/teacher/students_list')
+def get_students_list():
+    return render_template('teachers/students_list.html')
 # @authTeachers.route("/student")
 # def student():
 #     return render_template('studentlist.html')
@@ -92,7 +95,7 @@ def teacher_signup():
                     return render_template('teachers/signup.html')
 
     return render_template('teachers/signup.html')
-@authTeachers.route('/teachers/student_list/<teacherName>', methods=['GET'])
-def get_students(teacherName):
-    students = Student.query.all()
-    return render_template('teachers/students_list.html', teacherName=teacherName, students=students)
+# @authTeachers.route('/teachers/student_list/<teacherName>', methods=['GET'])
+# def get_students(teacherName):
+#     students = Student.query.all()
+#     return render_template('teachers/students_list.html', teacherName=teacherName, students=students)
