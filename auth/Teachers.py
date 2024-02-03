@@ -7,9 +7,15 @@ from extensions import db
 
 authTeachers = Blueprint('authTeacher', __name__)
 
-@authTeachers.route("/teachers/login_sucess/<teacherName>")
+
+@authTeachers.route("/teachers/login_success/<teacherName>")
 def teacher_login_success(teacherName):
     return render_template('teachers/home.html', teacherName=teacherName)
+
+@authTeachers.route("/teachers/studentsList", methods=['POST', 'GET'])
+def studentsList():
+    students = Student.query.all()
+    return render_template('teachers/students_list.html', students=students)
 
 @authTeachers.route("/", methods=['POST'])
 def login():
@@ -28,13 +34,44 @@ def login():
             flash("Your password is incorrect!")
             return render_template('home.html')
     else:
-        flash('Your email is incorrect!')
+        flash('Your email is isncorrect!')
         return render_template('home.html')
 
-    
-# @authTeachers.route("/student")
-# def student():
-#     return render_template('studentlist.html')
+@authTeachers.route('teachers/add_student', methods=['GET', 'POST'])
+def add_student():
+    #TODO: Handle studentExist = Student.query.filter_by(id=id).first()
+
+    if request.method == 'POST':
+        studentName = request.form['student_name']
+        studentEmail = studentName + '@schoolname.com'
+        
+        passwordString = f'{studentName}#schoolname'
+        studentPassword = pbkdf2_sha256.hash(passwordString)
+        new_student = Student(name=studentName, email=studentEmail, password=studentPassword)
+        try:
+            db.session.add(new_student)
+            db.session.commit()
+            flash('You have successfully add a student!', 'success')
+            return render_template('teachers/students_list.html', studentName = studentName)
+        except Exception as e:
+            flash(f"Error adding student: {str(e)}")
+            return render_template('teachers/add_student.html')
+    return render_template('teachers/add_student.html')
+
+@authTeachers.route('/teachers/studentsList/update/<int:id>', methods=['POST', 'GET'])
+def updateStudent(id):
+    student = Student.query.get_or_404(id)
+
+    if request.method == 'POST':
+        student.email = request.form['studentMail']
+
+        try:
+            db.session.commit()
+            return redirect('/teachers/studentsList')
+        except:
+            return 'There was a problem updating the student'
+    else:
+        return render_template('teachers/updateStudents.html', student=student)
 
 @authTeachers.route("/signup_success/<name>")
 def signup_success(name):
@@ -73,7 +110,7 @@ def teacher_signup():
                     return render_template('teachers/signup.html')
 
     return render_template('teachers/signup.html')
-@authTeachers.route('/teachers/student_list/<teacherName>', methods=['GET'])
-def get_students(teacherName):
-    students = Student.query.all()
-    return render_template('teachers/students_list.html', teacherName=teacherName, students=students)
+# @authTeachers.route('/teachers/student_list/<teacherName>', methods=['GET'])
+# def get_students(teacherName):
+#     students = Student.query.all()
+#     return render_template('teachers/students_list.html', teacherName=teacherName, students=students)

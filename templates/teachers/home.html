@@ -6,14 +6,30 @@ content %}
 <button type="button" class="btn btn-primary" onclick="redirectTolist()">
   View Your Students List
 </button>
+<button type="button" class="btn btn-primary" onclick="redirectToadd()">
+  Add Student
+</button>
 <script>
   var studentsList =
-    "{{ url_for('authTeacher.get_students', teacherName=teacherName, students=students) }}";
+    "{{ url_for('authTeacher.get_students_list', teacherName=teacherName, students=students) }}";
 
   $(document).ready(function () {
     $("#lastModificationsModal").modal("show");
   });
   function redirectToSignUp() {
+    window.location.href = studentsList;
+  }
+  var addStudent = "{{ url_for('authTeacher.add_student') }}";
+
+  $(document).ready(function () {
+    $("#lastModificationsModal").modal("show");
+  });
+  function redirectToadd() {
+    window.location.href = addStudent;
+  }
+  var studentsList = "{{ url_for('authTeacher.studentsList') }}";
+
+  function redirectTolist() {
     window.location.href = studentsList;
   }
 </script>

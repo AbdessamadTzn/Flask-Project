@@ -6,18 +6,21 @@
 {% endblock %} {% block title %} Home {% endblock %} {% block content%}
 
 <h3>Welcome Mr. {{ teacherName }}, here is your students's list</h3>
-
-<table>
-  <tr>
-    <th>Student Name</th>
-    <th>Student email</th>
-  </tr>
-  {% for student in students %}
-  <tr>
-    <td>{{student.name}}</td>
-    <td>{{student.email}}</td>
-  </tr>
-  {% endfor %}
-</table>
+<div class="studentsCRUD">
+  <table>
+    <tr>
+      <th>Student Name</th>
+      <th>Student email</th>
+      <th>Actions</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+      <td>{{student.name}}</td>
+      <td>{{student.email}}</td>
+      <td><a href="/teachers/studentsList/update/{{student.id}}">Update</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 
 {% endblock %}

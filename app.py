@@ -36,6 +36,20 @@ def get_students():
         student_list.append(student_data)
 
     return jsonify({'teachers': student_list})
+@app.route('/Students')
+def get_student():
+    students = Student.query.all()
+    student_list = []
+    for student in students:
+        student_data = {
+            'student_id': student.id,
+            'email': student.email,
+            'name': student.name,
+            'Hashed Password': student.password
+        }
+        student_list.append(student_data)
+
+    return jsonify({'students': student_list})
 
 
 

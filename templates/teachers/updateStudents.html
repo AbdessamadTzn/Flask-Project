@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block title %} {{m}} {% endblock %} {% block
+content %}
+
+<form>
+  <form
+    class="mx-auto"
+    style="margin-top: 20px; max-width: 300px"
+    action="/"
+    method="POST"
+  >
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label" style="color: black"
+        >Email address</label
+      >
+      <input
+        type="email"
+        class="form-control"
+        id="studentMail"
+        name="studentMail"
+        aria-describedby="emailHelp"
+        value="{{student.email}}"
+      />
+      <input type="submit" value="Update" />
+    </div>
+  </form>
+
+  {% endblock %}
+</form>
