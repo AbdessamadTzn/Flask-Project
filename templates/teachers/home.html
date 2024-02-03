@@ -27,6 +27,11 @@ content %}
   function redirectToadd() {
     window.location.href = addStudent;
   }
+  var studentsList = "{{ url_for('authTeacher.studentsList') }}";
+
+  function redirectTolist() {
+    window.location.href = studentsList;
+  }
 </script>
 
 {% endblock %}

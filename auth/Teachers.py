@@ -7,9 +7,15 @@ from extensions import db
 
 authTeachers = Blueprint('authTeacher', __name__)
 
+
 @authTeachers.route("/teachers/login_success/<teacherName>")
 def teacher_login_success(teacherName):
     return render_template('teachers/home.html', teacherName=teacherName)
+
+@authTeachers.route("/teachers/studentsList", methods=['POST', 'GET'])
+def studentsList():
+    students = Student.query.all()
+    return render_template('teachers/students_list.html', students=students)
 
 @authTeachers.route("/", methods=['POST'])
 def login():
