@@ -57,12 +57,21 @@ def add_student():
             flash(f"Error adding student: {str(e)}")
             return render_template('teachers/add_student.html')
     return render_template('teachers/add_student.html')
-@authTeachers.route('/teacher/students_list')
-def get_students_list():
-    return render_template('teachers/students_list.html')
-# @authTeachers.route("/student")
-# def student():
-#     return render_template('studentlist.html')
+
+@authTeachers.route('/teachers/studentsList/update/<int:id>', methods=['POST', 'GET'])
+def updateStudent(id):
+    student = Student.query.get_or_404(id)
+
+    if request.method == 'POST':
+        student.email = request.form['studentMail']
+
+        try:
+            db.session.commit()
+            return redirect('/teachers/studentsList')
+        except:
+            return 'There was a problem updating the student'
+    else:
+        return render_template('teachers/updateStudents.html', student=student)
 
 @authTeachers.route("/signup_success/<name>")
 def signup_success(name):
