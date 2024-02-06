@@ -67,11 +67,23 @@ def updateStudent(id):
 
         try:
             db.session.commit()
-            return redirect('/teachers/studentsList')
+            return render_template('/teachers/studentsList')
         except:
             return 'There was a problem updating the student'
     else:
         return render_template('teachers/updateStudents.html', student=student)
+@authTeachers.route('/teachers/studentsList/delete/<int:id>', methods=['POST', 'GET'])
+def deleteStudent(id):
+    student_toDelete = Student.query.get_or_404(id)
+
+    try:
+        db.session.delete(student_toDelete)
+        db.session.commit()
+        return render_template('/teachers/studentsList')
+    except:
+        return 'There was a problem deleting the student'
+
+
 
 @authTeachers.route("/signup_success/<name>")
 def signup_success(name):
