@@ -29,3 +29,4 @@ def student():
 
     return render_template('students/home.html')
 
+
