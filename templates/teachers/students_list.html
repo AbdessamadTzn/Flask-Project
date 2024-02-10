@@ -6,6 +6,42 @@
 {% endblock %} {% block title %} Home {% endblock %} {% block content%}
 
 <h3>Welcome Mr. {{ teacherName }}, here is your students's list</h3>
+{% with messages = get_flashed_messages() %} {% if messages %}
+<div
+  class="alert alert-danger alert-dismissible fade show"
+  role="alert"
+  style="
+    background-color: #ff8080;
+    color: black;
+    width: 30%;
+    padding: 10px;
+    padding-right: 1px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    position: relative;
+  "
+>
+  <button
+    type="button"
+    class="close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+    style="
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 5px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    "
+  >
+    <span aria-hidden="true" style="font-size: 20px">&times;</span>
+  </button>
+  {{ messages[0] }}
+</div>
+
+{% endif %} {% endwith %}
 <div class="studentsCRUD">
   <table>
     <tr>
@@ -22,6 +58,7 @@
     </tr>
     {% endfor %}
   </table>
+  <a href="{{ url_for('authTeacher.add_student') }}">Add</a>
 </div>
 
 {% endblock %}
