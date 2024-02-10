@@ -76,11 +76,12 @@ def updateStudent(id):
 @authTeachers.route('/teachers/studentsList/delete/<int:id>', methods=['POST', 'GET'])
 def deleteStudent(id):
     student_toDelete = Student.query.get_or_404(id)
-
+    student_name = student_toDelete.name
     try:
         db.session.delete(student_toDelete)
         db.session.commit()
-        return render_template('/teachers/studentsList')
+        flash(f'You have successfully deleted the student `{student_name}`', 'success')
+        return redirect(url_for('authTeacher.studentsList'))
     except:
         return 'There was a problem deleting the student'
 
