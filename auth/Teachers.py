@@ -48,10 +48,11 @@ def add_student():
         passwordString = f'{studentName}#schoolname'
         studentPassword = pbkdf2_sha256.hash(passwordString)
         new_student = Student(name=studentName, email=studentEmail, password=studentPassword)
+        student_name = new_student.name
         try:
             db.session.add(new_student)
             db.session.commit()
-            flash('You have successfully add a student!', 'success')
+            flash(f'You have successfully add `{student_name}`', 'success')
             return redirect(url_for('authTeacher.studentsList'))
         except Exception as e:
             flash(f"Error adding student: {str(e)}")
