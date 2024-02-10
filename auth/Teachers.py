@@ -52,11 +52,12 @@ def add_student():
             db.session.add(new_student)
             db.session.commit()
             flash('You have successfully add a student!', 'success')
-            return render_template('teachers/students_list.html', studentName = studentName)
+            return redirect(url_for('authTeacher.studentsList'))
         except Exception as e:
             flash(f"Error adding student: {str(e)}")
             return render_template('teachers/add_student.html')
     return render_template('teachers/add_student.html')
+    
 
 @authTeachers.route('/teachers/studentsList/update/<int:id>', methods=['POST', 'GET'])
 def updateStudent(id):
@@ -67,7 +68,7 @@ def updateStudent(id):
 
         try:
             db.session.commit()
-            return render_template('/teachers/studentsList')
+            return redirect('/')
         except:
             return 'There was a problem updating the student'
     else:
