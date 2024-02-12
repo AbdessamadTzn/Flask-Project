@@ -56,7 +56,7 @@ def add_student():
             return redirect(url_for('authTeacher.studentsList'))
         except Exception as e:
             flash(f"Error adding student: {str(e)}")
-            return render_template('teachers/add_student.html')
+            return redirect(url_for('authTeacher'))
     return render_template('teachers/add_student.html')
     
 
@@ -65,15 +65,19 @@ def updateStudent(id):
     student = Student.query.get_or_404(id)
 
     if request.method == 'POST':
-        student.email = request.form['studentMail']
+        student.name = request.form['student_name']
+        student.email = student.name + '@schoolname.com'
 
         try:
             db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was a problem updating the student'
-    else:
-        return render_template('teachers/updateStudents.html', student=student)
+            flash('Updated successfully!')
+            return redirect(url_for('authTeacher.studentsList'))
+        except Exception as e:
+            flash(f"Error updating student: {str(e)}")
+            return redirect(url_for('authTeacher.studentsList'))  # Redirect to students list on error
+    return render_template('teachers/updateStudents.html', student=student)
+
+
 @authTeachers.route('/teachers/studentsList/delete/<int:id>', methods=['POST', 'GET'])
 def deleteStudent(id):
     student_toDelete = Student.query.get_or_404(id)
