@@ -48,38 +48,45 @@ def add_student():
         passwordString = f'{studentName}#schoolname'
         studentPassword = pbkdf2_sha256.hash(passwordString)
         new_student = Student(name=studentName, email=studentEmail, password=studentPassword)
+        student_name = new_student.name
         try:
             db.session.add(new_student)
             db.session.commit()
-            flash('You have successfully add a student!', 'success')
-            return render_template('teachers/students_list.html', studentName = studentName)
+            flash(f'You have successfully add `{student_name}`', 'success')
+            return redirect(url_for('authTeacher.studentsList'))
         except Exception as e:
             flash(f"Error adding student: {str(e)}")
-            return render_template('teachers/add_student.html')
+            return redirect(url_for('authTeacher'))
     return render_template('teachers/add_student.html')
+    
 
 @authTeachers.route('/teachers/studentsList/update/<int:id>', methods=['POST', 'GET'])
 def updateStudent(id):
     student = Student.query.get_or_404(id)
 
     if request.method == 'POST':
-        student.email = request.form['studentMail']
+        student.name = request.form['student_name']
+        student.email = student.name + '@schoolname.com'
 
         try:
             db.session.commit()
-            return render_template('/teachers/studentsList')
-        except:
-            return 'There was a problem updating the student'
-    else:
-        return render_template('teachers/updateStudents.html', student=student)
+            flash('Updated successfully!')
+            return redirect(url_for('authTeacher.studentsList'))
+        except Exception as e:
+            flash(f"Error updating student: {str(e)}")
+            return redirect(url_for('authTeacher.studentsList'))  # Redirect to students list on error
+    return render_template('teachers/updateStudents.html', student=student)
+
+
 @authTeachers.route('/teachers/studentsList/delete/<int:id>', methods=['POST', 'GET'])
 def deleteStudent(id):
     student_toDelete = Student.query.get_or_404(id)
-
+    student_name = student_toDelete.name
     try:
         db.session.delete(student_toDelete)
         db.session.commit()
-        return render_template('/teachers/studentsList')
+        flash(f'You have successfully deleted the student `{student_name}`', 'success')
+        return redirect(url_for('authTeacher.studentsList'))
     except:
         return 'There was a problem deleting the student'
 
