@@ -8,9 +8,10 @@ from models import Teacher, Student
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'DJODNCWOICNWOIEACJOIEWJ'
+
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'db', 'app.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SECRET_KEY'] = 'DJODNCWOICNWOIEACJOIEWJ'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
@@ -60,8 +61,8 @@ if __name__ == '__main__':
     # os.makedirs(db_dir, exist_ok=True)
 
     # # Create the database tables
-    # with app.app_context():
-    #     db.create_all()
+    with app.app_context():
+        db.create_all()
 
     # Run the Flask application
     app.run(debug=True)
