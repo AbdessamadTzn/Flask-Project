@@ -24,7 +24,7 @@ app.register_blueprint(authStudents, url_prefix='/')
 @app.route('/')
 def index():
     return render_template('home.html')
-@app.route('/Teachers')
+''' @app.route('/Teachers')
 def get_students():
     students = Teacher.query.all()
     student_list = []
@@ -37,7 +37,7 @@ def get_students():
         }
         student_list.append(student_data)
 
-    return jsonify({'teachers': student_list})
+    return jsonify({'teachers': student_list})'''
 @app.route('/Students')
 def get_student():
     students = Student.query.all()

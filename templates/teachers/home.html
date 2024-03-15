@@ -2,7 +2,6 @@
 content %}
 <h5>Hi {{teacherName}}, you logged in successufuly!</h5>
 <br />
-<h3>CRUD FOR TEACHERS IN PROGRESS...</h3>
 <button type="button" class="btn btn-primary" onclick="redirectTolist()">
   View Your Students List
 </button>
@@ -27,7 +26,8 @@ content %}
   function redirectToadd() {
     window.location.href = addStudent;
   }
-  var studentsList = "{{ url_for('authTeacher.studentsList') }}";
+  var studentsList =
+    "{{ url_for('authTeacher.studentsList', teacherName=teacherName) }}";
 
   function redirectTolist() {
     window.location.href = studentsList;
