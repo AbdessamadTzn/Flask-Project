@@ -1,16 +1,23 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session
 import re
 from passlib.hash import pbkdf2_sha256
 
 from models import Teacher, Student
 from extensions import db
 
+
 authTeachers = Blueprint('authTeacher', __name__)
+
+
 
 
 @authTeachers.route("/teachers/login_success/<teacherName>")
 def teacher_login_success(teacherName):
-    return render_template('teachers/home.html', teacherName=teacherName)
+    if 'logged_in' in session:
+        session_user = session['username']
+        return render_template('teachers/home.html', teacherName=session_user)
+    else:
+        return render_template('home.html')
 
 @authTeachers.route("/teachers/studentsList/<teacherName>", methods=['POST', 'GET'])
 def studentsList(teacherName):
@@ -19,23 +26,27 @@ def studentsList(teacherName):
 
 @authTeachers.route("/", methods=['POST'])
 def login():
-    teacher_log_mail = request.form['teacher_log_mail']
-    teacher_log_password = request.form['teacher_log_password']
+    if request.method=='POST':
+        teacher_log_mail = request.form['teacher_log_mail']
+        teacher_log_password = request.form['teacher_log_password']
 
-    try:
-        teacherLogin = Teacher.query.filter_by(email=teacher_log_mail).first()
-    except Exception as e:
-        print(f"Query Teacher's mail error: {str(e)}")
+        try:
+            teacherLogin = Teacher.query.filter_by(email=teacher_log_mail).first()
+        except Exception as e:
+            print(f"Query Teacher's mail error: {str(e)}")
 
-    if teacherLogin:
-        if pbkdf2_sha256.verify(teacher_log_password, teacherLogin.password):
-            return redirect(url_for('authTeacher.teacher_login_success', teacherName=teacherLogin.name))
+        if teacherLogin:
+            if pbkdf2_sha256.verify(teacher_log_password, teacherLogin.password):
+                session['logged_in'] = True
+                session['username'] = teacherLogin.name
+                return redirect(url_for('authTeacher.teacher_login_success', teacherName=teacherLogin.name))
+            else:
+                flash("Your password is incorrect!")
+                return render_template('home.html')
         else:
-            flash("Your password is incorrect!")
+            flash('Your email is isncorrect!')
             return render_template('home.html')
-    else:
-        flash('Your email is isncorrect!')
-        return render_template('home.html')
+    return render_template('home.html')
 
 @authTeachers.route('teachers/add_student', methods=['GET', 'POST'])
 def add_student():
