@@ -12,10 +12,10 @@ authTeachers = Blueprint('authTeacher', __name__)
 def teacher_login_success(teacherName):
     return render_template('teachers/home.html', teacherName=teacherName)
 
-@authTeachers.route("/teachers/studentsList", methods=['POST', 'GET'])
-def studentsList():
+@authTeachers.route("/teachers/studentsList/<teacherName>", methods=['POST', 'GET'])
+def studentsList(teacherName):
     students = Student.query.all()
-    return render_template('teachers/students_list.html', students=students)
+    return render_template('teachers/students_list.html', students=students, teacherName=teacherName)
 
 @authTeachers.route("/", methods=['POST'])
 def login():
