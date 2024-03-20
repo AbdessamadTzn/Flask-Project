@@ -1,19 +1,18 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session
 import re
 from passlib.hash import pbkdf2_sha256
+from datetime import timedelta
 
 from models import Teacher, Student
-from extensions import db
+from extensions import db, app
 
 
 authTeachers = Blueprint('authTeacher', __name__)
-
-
-
+app.permanent_session_lifetime = timedelta(minutes=1)
 
 @authTeachers.route("/teachers/login_success/<teacherName>")
 def teacher_login_success(teacherName):
-    if 'logged_in' in session:
+    if 'username' in session:
         session_user = session['username']
         return render_template('teachers/home.html', teacherName=session_user)
     else:

@@ -3,10 +3,12 @@ from flask import Flask, render_template, jsonify
 import psycopg2
 from dotenv import load_dotenv
 from extensions import db
+from extensions import app
 from models import Teacher, Student
 
 
-app = Flask(__name__)
+
+
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'db', 'app.db')
@@ -14,6 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SECRET_KEY'] = 'DJODNCWOICNWOIEACJOIEWJ'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
+
 
 from auth.Teachers import authTeachers
 from auth.Students import authStudents
